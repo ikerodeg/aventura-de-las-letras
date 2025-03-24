@@ -1,0 +1,41 @@
+---
+const alphabet = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','Ñ','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+---
+<section class="alphabetContainer">
+  <!-- Generar los 26 botones del abecedario -->
+  {alphabet.map((letra) => (
+    <button class={`letterBttn letterBttn${letra}`} data-letra={letra}>{letra}</button>
+  ))}
+</section>
+
+<style>
+  .alphabetContainer{
+    display: grid;
+    justify-items: center;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1.5rem;
+    padding: 1em;
+  }
+
+  .letterBttn{
+    inline-size: fit-content;
+    padding: 0.3rem;
+    aspect-ratio: 1/1;
+    border-radius: 0.3em;
+    border: 3px solid yellow;
+    outline: 1px solid orange;
+    background-color: rgba(0, 0, 0, 0);
+    font-size: 3rem;
+    color: red;
+    text-shadow: 0 0 5px yellow;
+  }
+
+  .letterBttn:hover{
+    background-color: red;
+    color: yellow;
+    text-shadow: 0 0 3px white;
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 0.5rem yellow);
+  }
+
+</style>

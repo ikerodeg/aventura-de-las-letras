@@ -1,0 +1,43 @@
+---
+import ButtonBase from "./ButtonBase.astro";
+---
+
+<nav class="buttonsWrapPresenta">
+  <ButtonBase 
+    idClassButton="newGameButton" 
+    hrefButton="/newGame/"
+    imgSrc="/src/assets/img/anillo1.webp"
+    imgAlt="Nueva Partida"
+  />
+  <ButtonBase 
+    idClassButton="continueGameButton" 
+    hrefButton="#"
+    imgSrc="/src/assets/img/anillo2.webp"
+    imgAlt="Continuar Partida"
+  />
+  <ButtonBase 
+    idClassButton="exitGameButton" 
+    hrefButton="#"
+    imgSrc="/src/assets/img/anillo3.webp"
+    imgAlt="Salir del Juego"
+  />
+</nav>
+
+<style>
+  .buttonsWrapPresenta {
+    display: flex;
+    flex-direction: column;
+    gap: 3em;
+    inline-size: fit-content;
+    margin-inline-start: 8vw;
+    margin-block-start: 3em;
+
+
+
+    img{
+      display: block;
+      inline-size: 10em;
+    }
+  }
+
+</style>

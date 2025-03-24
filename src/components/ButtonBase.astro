@@ -1,0 +1,12 @@
+---
+const {idClassButton, hrefButton, imgSrc, imgAlt, text} = Astro.props
+---
+
+<a href=`${hrefButton}` class=`${idClassButton}` id=`${idClassButton}`>{text}<img src=`${imgSrc}` alt=`${imgAlt}`></a>
+
+<style>
+    a:hover{
+      filter: drop-shadow(0 0 10px yellow);
+      transform: scale(1.05);
+    }
+</style>

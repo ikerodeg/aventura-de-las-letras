@@ -1,0 +1,37 @@
+---
+import ButtonBase from "./ButtonBase.astro";
+---
+
+<nav class="buttonsWrapNewGame">
+  <ButtonBase 
+    idClassButton="confirmButton" 
+    hrefButton="/gameSelect"
+    imgSrc="/src/assets/img/anillo4.webp"
+    imgAlt="OK"
+  />
+  <ButtonBase 
+    idClassButton="resetButton" 
+    hrefButton="#"
+    imgSrc="/src/assets/img/anillo5.webp"
+    imgAlt="BORRAR"
+  />
+  <ButtonBase 
+    idClassButton="backButton" 
+    hrefButton="/"
+    imgSrc="/src/assets/img/anillo6.webp"
+    imgAlt="VOLVER"
+  />
+</nav>
+
+<style>
+  .buttonsWrapNewGame {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 2em;
+
+    img {
+      display: block;
+      inline-size: 6em;
+    }
+  }
+</style>
