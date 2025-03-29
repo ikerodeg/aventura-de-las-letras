@@ -1,14 +1,13 @@
 {
   "name": "aventura-de-las-letras",
+  "version": "1.0.0",
   "type": "module",
-  "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
+    "start": "node server.js"
   },
-  "dependencies": {
-    "astro": "^5.5.3"
-  }
+  "dependencies": {},
+  "devDependencies": {},
+  "description": "Juego educativo para mi hijo",
+  "author": "Iker",
+  "license": "MIT"
 }

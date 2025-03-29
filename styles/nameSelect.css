@@ -1,0 +1,141 @@
+:root{
+  --black: hsl(0, 0%, 0%);
+  --white: hsl(0, 0%, 100%);
+  --red: hsl(0, 100%, 50%);
+  --yellow: hsl(60, 100%, 50%);
+}
+/* --------------------------------------------- HTML ------------------------------------------ */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--black);
+}
+/* ------------------------------------BODY BACKGROUND IMAGE ------------------------------------ */
+body{
+  background-image: url('/assets/img/shadow_01.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+}
+/* ------------------------------------------- TITULO ------------------------------------------- */
+header{
+  margin-block: 2em;
+}
+.h1Tittle {
+  margin: 0;
+  padding: 0;
+  font-size: 3rem;
+  font-weight: 800;
+  text-shadow:
+    0 0 10px var(--white),
+    0 0 5px var(--yellow);
+  animation: bounce 1s infinite;
+  color: var(--red);
+  text-align: center;
+}
+/* ------------------------------------------- ALFABETO ------------------------------------------- */
+.alphabetContainer{
+  display: grid;
+  justify-items: center;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1.5rem;
+  padding: 1em;
+}
+
+.letterBttn{
+  inline-size: fit-content;
+  padding: 0.3rem;
+  aspect-ratio: 1/1;
+  border-radius: 0.3em;
+  border: 3px solid var(--yellow);
+  outline: 1px solid orange;
+  background-color: rgba(0, 0, 0, 0);
+  font-size: 3rem;
+  color: red;
+  text-shadow: 0 0 5px var(--yellow);
+}
+
+.letterBttn:hover{
+  background-color: red;
+  color: var(--yellow);
+  text-shadow: 0 0 3px var(--white);
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 0.5rem var(--yellow));
+}
+/* ------------------------------------------- NAME INPUT --------------------------------------- */
+.nameImputContainer{
+  margin-block: 0.5em;
+  text-align: center;
+  font-size: 5rem;
+  font-weight: 800;
+  color: var(--white);
+  text-shadow: 0 0 3px var(--white);
+
+  .letterSlot{
+    inline-size: 5rem;
+    display: inline-block;
+  }
+}
+/* ---------------------------------------- ACTION BUTTONS -------------------------------------- */
+.buttonsWrapNewGame {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 2em;
+
+  img {
+    display: block;
+    inline-size: 6em;
+  }
+
+  a:hover{
+    filter: drop-shadow(0 0 10px var(--yellow));
+    transform: scale(1.05);
+  }
+}
+/* -----------------------------------------TRANSITION ---------------------------------------- */
+.fade-out {
+  animation: fadeOut 1s ease-out both;
+}
+.fade-in {
+  animation: fadeIn 1s ease-in both;
+}
+/* ------------------------------------ ANIMACIONES ------------------------------------------- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+
+
+
+
+
+
+
+
+

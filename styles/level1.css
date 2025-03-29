@@ -1,0 +1,226 @@
+/* ---------------------------------- VARIABLES GLOBALES -------------------------------------- */
+:root {
+  --background-color: hsl(0, 0%, 0%);         /* Negro */
+  --footer-background: hsl(0, 0%, 10%);         /* Negro muy oscuro */
+  --footer-text-color: hsl(0, 0%, 100%);        /* Blanco */
+}
+/* ----------------------------------------- HTML --------------------------------------------- */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: var(--background-color);
+  color: white;
+}
+/* ----------------------------------------- BODY --------------------------------------------- */
+body {
+  background-image: url('/assets/img/woodLandscape.webp');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+  display: flex;
+  flex-direction: column;
+}
+/* ----------------------------------------- MAIN --------------------------------------------- */
+.mainContent{
+  block-size: 100%;
+}
+/* ---------------------------------------- HEADER -------------------------------------------- */
+.playersInfo{
+  display: flex;
+  justify-content: space-between;
+
+  .heroInfo{
+    inline-size: 45%;
+    padding: 0.8em;
+    margin: 0;
+
+    /* Barra de vida del Héroe */
+    .heroBar {
+      block-size: 1.5em;
+      background-color: hsl(0, 0%, 0%);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 2px solid white;
+      box-shadow: 1px 1px 3px black;
+      margin-block-end: 1em;
+    }
+    /* Relleno barra vida del Héroe */
+    .heroBarFill {
+      inline-size: 100%;
+      block-size: 100%;
+      background-color: hsl(120, 100%, 50%);
+      transition: inline-size 0.5s ease;
+    }
+
+    .heroName{
+      padding: 0;
+      margin: 0;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: black;
+      filter: drop-shadow(0 0 3px white);
+    }
+  }
+
+
+  .enemyInfo{
+    inline-size: 45%;
+    padding: 0.8em;
+    margin: 0;
+  
+    /* Barra de vida del Enemigo */
+    .enemyBar {
+      margin-block-end: 1em;
+      block-size: 1.5em;
+      background-color: hsl(0, 0%, 30%);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 2px solid white;
+      box-shadow: 1px 1px 3px black;
+    }
+    /* Relleno barra vida del Enemigo */
+    .enemyBarFill {
+      inline-size: 100%;
+      block-size: 100%;
+      background-color: hsl(0, 100%, 50%);
+      transition: inline-size 0.5s ease;
+    }
+
+    .enemyName{
+      padding: 0;
+      margin: 0;
+      text-align: end;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: black;
+      filter: drop-shadow(0 0 3px red);
+    }
+  }
+}
+.mainCounter{
+  padding: 0;
+  margin-block: 0;
+  margin-inline: auto;
+  font-size: 5rem;
+  font-weight: 800;
+  color: red;
+  filter: drop-shadow(1px 1px 3px black);
+}
+/* ----------------------------------------- ARENA -------------------------------------------- */
+.gameArena {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  block-size: 100%;
+  padding-inline: 5%;
+}
+.heroArena {
+  position: absolute;
+  left: 5%;
+  bottom: 22%;
+  animation: glowHero alternate 1s infinite;
+}
+.enemyArena {
+  position: absolute;
+  right: 5%;
+  bottom: 22%;
+  animation: glowEnemy alternate 1s infinite;
+}
+/* --------------------------------------- FOOTER -------------------------------------------- */
+footer {
+  padding: 0.5em;
+  block-size: 12vh;
+  background-color: var(--footer-background);
+  
+
+  
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  
+  padding: 1rem;
+  text-align: center;
+  z-index: 10;
+  
+  .ringsContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+    img{
+      max-inline-size: 100%;
+      inline-size: 90%;
+    }
+
+    .ring{
+      cursor: pointer;
+    }
+  }
+}
+/* -----------------------------------------TRANSITIONS ---------------------------------------- */
+.fade-out {
+  animation: fadeOut 1s ease-out both;
+}
+.fade-in {
+  animation: fadeIn 1s ease-in both;
+}
+/* ------------------------------------ ANIMACIONES ------------------------------------------- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+@keyframes glowHero {
+  0% {
+  }
+  50% {
+    filter: drop-shadow(0 0 0.5em white);
+  }
+  100% {
+    filter: drop-shadow(0 0 1em white);
+  }
+  50% {
+    filter: drop-shadow(0 0 0.5em white);
+  }
+  0% {
+  }
+}
+@keyframes glowEnemy {
+  0% {
+  }
+  50% {
+    filter: drop-shadow(0 0 0.5em red);
+  }
+  100% {
+    filter: drop-shadow(0 0 1em red);
+  }
+  50% {
+    filter: drop-shadow(0 0 0.5em red);
+  }
+  0% {
+  }
+}

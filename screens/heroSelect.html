@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SELECCIONA TU HÉROE</title>
+  <link rel="stylesheet" href="/styles/heroSelect.css">
+</head>
+<body class="fade-in">
+  <header>
+    <h1 class="h1Tittle">SELECCIONA TU HÉROE</h1>
+  </header>
+  <main class="mainContent">
+    <section class="heroSelectionContainer">
+      <div class="heroContainer heroContainer--shadow">
+        <img class="imgHero" src="../assets/img/shadow.webp" alt="shadow" data-hero="shadow">
+        <p class="p p--shadow">SHADOW</p>
+      </div>
+      <div class="heroContainer heroContainer--knuckles">
+        <img class="imgHero" src="../assets/img/knuckles.webp" alt="knuckles" data-hero="knuckles">
+        <p class="p p--knuckles">KNUCKLES</p>
+      </div>
+      <div class="heroContainer heroContainer--silver">
+        <img class="imgHero" src="../assets/img/silver.webp" alt="silver" data-hero="silver">
+        <p class="p p--silver">SILVER</p>
+      </div>
+      <div class="heroContainer heroContainer--sonic">
+        <img class="imgHero" src="../assets/img/sonic.webp" alt="sonic" data-hero="sonic">
+        <p class="p p--sonic">SONIC</p>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <nav class="buttonsWrapNewGame">
+      <a href="#" class="backButton" id="backButton">
+        <img src="/assets/img/anillo6.webp" alt="volver">
+      </a>
+    </nav>
+  </footer>
+  <script type="module" src="/scripts/heroSelect.js"></script>
+</body>
+</html>

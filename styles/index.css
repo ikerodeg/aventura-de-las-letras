@@ -1,0 +1,94 @@
+:root{
+  --black: hsl(0, 0%, 0%);
+  --white: hsl(0, 0%, 100%);
+  --red: hsl(0, 100%, 50%);
+  --yellow: hsl(60, 100%, 50%);
+}
+/* --------------------------------------------- HTML ------------------------------------------ */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--black);
+}
+/* ------------------------------------BODY BACKGROUND IMAGE ------------------------------------ */
+body {
+  display: flex;
+  flex-direction: column;
+  background-image: url("/assets/img/shadow_03.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+/* ------------------------------------------- TITULO ------------------------------------------- */
+header{
+  margin-block-start: 1em;
+}
+.h1Tittle {
+  margin: 0;
+  padding: 0;
+  font-size: 5rem;
+  font-weight: 800;
+  text-shadow:
+    0 0 10px var(--black),
+    0 0 5px var(--yellow);
+  animation: bounce 1s infinite;
+  color: var(--red);
+  text-align: center;
+}
+/* ------------------------------------------ BOTONES ------------------------------------------- */
+.buttonsWrapPresenta {
+  display: flex;
+  flex-direction: column;
+  gap: 3em;
+  inline-size: fit-content;
+  margin-inline-start: 8vw;
+  margin-block-start: 3em;
+
+  img{
+    display: block;
+    inline-size: 10em;
+  }
+
+  a:hover{
+    filter: drop-shadow(0 0 10px var(--yellow));
+    transform: scale(1.05);
+  }
+}
+
+
+/* -----------------------------------------TRANSITION ---------------------------------------- */
+.fade-out {
+  animation: fadeOut 1s ease-out both;
+}
+.fade-in {
+  animation: fadeIn 1s ease-in both;
+}
+
+/* ------------------------------------ ANIMACIONES ------------------------------------------- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
