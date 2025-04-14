@@ -18,7 +18,7 @@
       setTimeout(() => {
         document.body.classList.remove('fade-in');
         document.body.classList.add('fade-out');
-        window.location.href = '../screens/levelSelect.html';
+        window.location.href = '../screens/gameArenaL1.html';
       }, 600
       );
     }
