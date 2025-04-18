@@ -14,14 +14,15 @@ export const enemy = {
   async attack() {
     try {
       // Ejecuta sonido de ataque del enemigo
-      const resultadoPlaySound = await playSound("enemyAttack");
-      console.log(resultadoPlaySound);
+      //const resultadoPlaySound = await playSound("enemyAttack");
+      //console.log(resultadoPlaySound);
 
       // EJecutar animación de ataque
       const resultadoEnemyAttackAnimation = await animations.enemyAttackAnimation();
       console.log(resultadoEnemyAttackAnimation);
 
       // Ejecutar método takeDamage en Hero
+      playSound("screamPain");
       hero.takeDamage(this.attackPower);
 
       // Pequeña pausa para feedback visual
@@ -32,8 +33,7 @@ export const enemy = {
 
     } catch (error) {
       console.error("❌ Error en enemy.attack:", error);
-      // Async function rechaza automáticamente la promesa si se lanza un error
-      throw error; // Relanzar el error para que quien llamó a attack se entere
+      throw error;
     }
   },
 

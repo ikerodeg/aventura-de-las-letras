@@ -21,13 +21,13 @@ export const hero = {
       const resultadoEnemyAttackAnimation = await animations.heroAttackAnimation();
       console.log(resultadoEnemyAttackAnimation);
       
-      
       // Ejecutar método takeDamage en Enemy
       enemy.takeDamage(this.attackPower);
       
       // Pequeña pausa para feedback visual
       await new Promise(resolve => setTimeout(resolve, 200));
       
+      // Async function resuelve automáticamente la promesa al retornar
       return '🏁 hero.attack() completado';
 
     } catch (error) {
@@ -37,7 +37,7 @@ export const hero = {
   },
 
   // Método de recibir daño
-  async takeDamage(damage) {
+  takeDamage(damage) {
     // Reproducir sonido y animación
     playSound("heroTakeDamage");
     animations.heroTakeDamageAnimation();

@@ -61,7 +61,7 @@ async function checkTurn() {
   return true;
 }
 
-// Función que inicia el turno del combate (CORE ACTUALIZADO)
+// Función que inicia el turno del combate
 export async function startTurn() {
   console.log(`currentSoundIndex: ${gameState.currentSoundIndex}`);
 

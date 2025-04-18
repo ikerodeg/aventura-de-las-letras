@@ -1,357 +1,49 @@
+@import url(./barsAndCounter.css);
+@import url(./enemy.css);
+@import url(./hero.css);
+@import url(./footer.css);
+@import url(./animations.css);
 /* ---------------------------------- VARIABLES GLOBALES -------------------------------------- */
 :root {
-  --background-color: hsl(0, 0%, 0%);         /* Negro */
-  --footer-background: hsl(0, 0%, 10%);         /* Negro muy oscuro */
-  --footer-text-color: hsl(0, 0%, 100%);        /* Blanco */
+  --bg-dark: hsl(0, 0%, 0%);
+
+
+
+  --txtClr-light: hsl(0, 0%, 100%);
+
+  --footer-background: hsl(0, 0%, 10%);
+  --footer-text-color: hsl(0, 0%, 100%);
 }
-/* ----------------------------------------- HTML --------------------------------------------- */
-html, body {
+
+* {
   margin: 0;
   padding: 0;
+}
+/* ----------------------------------------- HTML --------------------------------------------- */
+html, body{
   height: 100%;
-  background-color: var(--background-color);
-  color: white;
 }
 /* ----------------------------------------- BODY --------------------------------------------- */
 body {
+  background-color: var(--bg-dark);
   background-image: url('/assets/img/woodLandscape.webp');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  
   display: flex;
   flex-direction: column;
+  color: var(--txtClr-light);
 }
 /* ----------------------------------------- MAIN --------------------------------------------- */
 .mainContent{
   block-size: 100%;
 }
-/* ---------------------------------------- HEADER -------------------------------------------- */
-.playersInfo{
-  display: flex;
-  justify-content: space-between;
-
-  .heroInfo{
-    inline-size: 45%;
-    padding: 0.8em;
-    margin: 0;
-
-    /* Barra de vida del Héroe */
-    .heroBar {
-      block-size: 1.5em;
-      background-color: hsl(0, 0%, 0%);
-      border-radius: 10px;
-      overflow: hidden;
-      border: 2px solid white;
-      box-shadow: 1px 1px 3px black;
-      margin-block-end: 1em;
-    }
-    /* Relleno barra vida del Héroe */
-    .heroBarFill {
-      inline-size: 100%;
-      block-size: 100%;
-      background-color: hsl(120, 100%, 50%);
-      transition: inline-size 0.5s ease;
-    }
-
-    .heroName{
-      padding: 0;
-      margin: 0;
-      font-size: 1.2rem;
-      font-weight: 800;
-      color: black;
-      filter: drop-shadow(0 0 3px white);
-    }
-  }
-
-
-  .enemyInfo{
-    inline-size: 45%;
-    padding: 0.8em;
-    margin: 0;
-  
-    /* Barra de vida del Enemigo */
-    .enemyBar {
-      margin-block-end: 1em;
-      block-size: 1.5em;
-      background-color: hsl(0, 0%, 30%);
-      border-radius: 10px;
-      overflow: hidden;
-      border: 2px solid white;
-      box-shadow: 1px 1px 3px black;
-    }
-    /* Relleno barra vida del Enemigo */
-    .enemyBarFill {
-      inline-size: 100%;
-      block-size: 100%;
-      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      background: linear-gradient(to right, #ff0000 0%, #cc0000 100%);
-    }
-
-    .enemyName{
-      padding: 0;
-      margin: 0;
-      text-align: end;
-      font-size: 1.2rem;
-      font-weight: 800;
-      color: black;
-      filter: drop-shadow(0 0 3px red);
-    }
-  }
-}
-.mainCounter{
-  padding: 0;
-  margin-block: 0;
-  margin-inline: auto;
-  font-size: 5rem;
-  font-weight: 800;
-  color: red;
-  filter: drop-shadow(1px 1px 3px black);
-}
-
 /* ----------------------------------------- ARENA -------------------------------------------- */
 .gameArena {
   position: relative;
   display: flex;
-  justify-content: space-between;
   align-items: flex-end;
   block-size: 100%;
   padding-inline: 5%;
-  z-index: 1;
-}
-.heroArena {
-  position: absolute;
-  left: 5%;
-  bottom: 22%;
-  /*animation: glowHero alternate 1s infinite;*/
-  will-change: filter;
-  transform: translateZ(0);
-}
-.enemyArena {
-  position: absolute;
-  right: 5%;
-  bottom: 22%;
-  /* animation: glowEnemy alternate 1s infinite; */
-  will-change: filter;
-  transform: translateZ(0);
-}
-/* ----------------------------------------- HEROE ------------------------------------------- */
-.hero-attack-move {
-  transition: 
-    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-    filter 0.3s ease;
-  z-index: 2;
-}
-
-.hero-attack-return {
-  transition: transform 0.35s ease-out;
-}
-
-.hero-impact-frame {
-  filter: brightness(1.2) contrast(1.1);
-}
-
-
-/* ----------------------------------------- ENEMIGO ------------------------------------------- */
-.enamy-take-damage {
-  animation: damage-flash-enemy 0.3s ease 2;
-}
-
-/* --------------------------------------- FOOTER -------------------------------------------- */
-footer {
-  padding: 0.5em;
-  block-size: 12vh;
-  background-color: var(--footer-background);
-  
-
-  
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  
-  padding: 1rem;
-  text-align: center;
-  z-index: 10;
-  
-  .ringsContainer{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-
-    img{
-      max-inline-size: 100%;
-      inline-size: 90%;
-    }
-
-    .ring{
-      cursor: pointer;
-    }
-  }
-}
-.ringsContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.5s ease-in-out;
-}
-.ringsContainer.visible {
-  opacity: 1;
-  pointer-events: auto;
-}
-.ringsContainer.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-.ring-clicked {
-  transform: scale(0.92);
-  opacity: 0.8;
-  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.ring:hover {
-  filter: brightness(1.1);
-  transform: scale(1.02);
-}
-.ring-particles {
-  position: fixed; /* Cambiado de absolute a fixed */
-  transform: translate(-50%, -50%); /* Centrar perfectamente */
-  width: 60px; /* Tamaño aumentado para mejor visibilidad */
-  height: 60px;
-  background: radial-gradient(circle, 
-    rgba(255, 215, 0, 0.9) 20%, 
-    rgba(255, 165, 0, 0.7) 50%,
-    transparent 80%
-  );
-  animation: particle-fade 0.8s ease-out;
-  pointer-events: none;
-  z-index: 1000; /* Asegurar que aparezca sobre todo */
-}
-.ring-particles {
-  background: radial-gradient(circle, 
-  rgba(255, 215, 0, 0.9) 15%, 
-  rgba(255, 165, 0, 0.3) 40%,
-  transparent 65%
-);
-mix-blend-mode: screen; /* Mejor integración con el fondo */
-}
-/* -----------------------------------------TRANSITIONS ---------------------------------------- */
-.fade-out {
-  animation: fadeOut 1s ease-out both;
-}
-.fade-in {
-  animation: fadeIn 1s ease-in both;
-}
-/* ------------------------------------ ANIMACIONES ------------------------------------------- */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-@keyframes bounce {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-@keyframes glowHero {
-  0% {
-  }
-  50% {
-    filter: drop-shadow(0 0 0.5em white);
-  }
-  100% {
-    filter: drop-shadow(0 0 1em white);
-  }
-  50% {
-    filter: drop-shadow(0 0 0.5em white);
-  }
-  0% {
-  }
-}
-@keyframes glowEnemy {
-  0% {
-  }
-  50% {
-    filter: drop-shadow(0 0 0.5em red);
-  }
-  100% {
-    filter: drop-shadow(0 0 1em red);
-  }
-  50% {
-    filter: drop-shadow(0 0 0.5em red);
-  }
-  0% {
-  }
-}
-@keyframes damage-flash-enemy {
-  0% { 
-    filter: brightness(100%);
-    transform: translate(0, 0) rotate(0deg);
-  }
-  30% {
-    transform: translate(4px, -2px) rotate(2deg); 
-    }
-  50% {
-    transform: translate(-3px, 1px) rotate(-1deg);
-    filter: brightness(150%); 
-    }
-  75% {
-    transform: translate(-2px, 0) rotate(0deg); 
-    }
-  100% {
-    transform: translate(0, 0) rotate(0deg);
-    filter: brightness(100%); 
-    }
-}
-@keyframes damage-flash-hero {
-  0% { 
-    filter: brightness(100%);
-    transform: translate(0, 0) rotate(0deg);
-  }
-  30% {
-    transform: translate(-4px, 2px) rotate(-2deg); 
-    }
-  50% {
-    transform: translate(3px, -1px) rotate(1deg);
-    filter: brightness(150%); 
-    }
-  75% {
-    transform: translate(2px, 0) rotate(0deg); 
-    }
-  100% {
-    transform: translate(0, 0) rotate(0deg);
-    filter: brightness(100%); 
-    }
-}
-@keyframes particle-fade {
-  0% { 
-    transform: scale(0) translate(-50%, -50%);
-    opacity: 1;
-    filter: blur(0);
-  }
-  90% {
-    opacity: 0.2;
-    filter: blur(2px);
-  }
-  100% { 
-    transform: scale(2) translate(-50%, -50%);
-    opacity: 0;
-    filter: blur(4px);
-  }
+  z-index: 0;
 }

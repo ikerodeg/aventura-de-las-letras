@@ -1,0 +1,28 @@
+.enemyArena {
+  position: absolute;
+  right: 5%;
+  bottom: 22%;
+  /* animation: glowEnemy alternate 1s infinite; */
+  will-change: filter;
+  transform: translateZ(0);
+}
+
+.enemy-attack-move {
+  transition: 
+    transform 1.5s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.3s ease-in;
+  z-index: 2;
+}
+
+.enemy-attack-return {
+  transition: transform 1s ease-out;
+}
+
+.enemy-impact-frame {
+  filter: brightness(1.2) contrast(1.1);
+}
+
+.enemy-take-damage {
+  animation: damage-flash-enemy 0.3s ease 2;
+}
+

@@ -1,0 +1,78 @@
+footer {
+  padding: 0.5em;
+  block-size: 12vh;
+  background-color: var(--footer-background);
+  
+
+  
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  
+  padding: 1rem;
+  text-align: center;
+  z-index: 10;
+  
+  .ringsContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+    img{
+      max-inline-size: 100%;
+      inline-size: 90%;
+    }
+
+    .ring{
+      cursor: pointer;
+    }
+  }
+}
+.ringsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease-in-out;
+}
+.ringsContainer.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.ringsContainer.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.ring-clicked {
+  transform: scale(0.92);
+  opacity: 0.8;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.ring:hover {
+  filter: brightness(1.1);
+  transform: scale(1.02);
+}
+.ring-particles {
+  position: fixed; /* Cambiado de absolute a fixed */
+  transform: translate(-50%, -50%); /* Centrar perfectamente */
+  width: 60px; /* Tamaño aumentado para mejor visibilidad */
+  height: 60px;
+  background: radial-gradient(circle, 
+    rgba(255, 215, 0, 0.9) 20%, 
+    rgba(255, 165, 0, 0.7) 50%,
+    transparent 80%
+  );
+  animation: particle-fade 0.8s ease-out;
+  pointer-events: none;
+  z-index: 1000; /* Asegurar que aparezca sobre todo */
+}
+.ring-particles {
+  background: radial-gradient(circle, 
+  rgba(255, 215, 0, 0.9) 15%, 
+  rgba(255, 165, 0, 0.3) 40%,
+  transparent 65%
+);
+mix-blend-mode: screen; /* Mejor integración con el fondo */
+}

@@ -1,0 +1,27 @@
+.heroArena {
+  position: absolute;
+  left: 5%;
+  bottom: 22%;
+  /*animation: glowHero alternate 1s infinite;*/
+  will-change: filter;
+  transform: translateZ(0);
+}
+
+.hero-attack-move {
+  transition: 
+    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.3s ease;
+  z-index: 2;
+}
+
+.hero-attack-return {
+  transition: transform 0.35s ease-out;
+}
+
+.hero-impact-frame {
+  filter: brightness(1.2) contrast(1.1);
+}
+
+.hero-take-damage {
+  animation: damage-flash-hero 0.3s ease 2;
+}
