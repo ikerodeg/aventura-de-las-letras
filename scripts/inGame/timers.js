@@ -1,10 +1,8 @@
-import { enemy } from "./enemy.js";
-import { updateCounter } from "./ui.js";
-
 let countdownTimerId = null;
 
 // Cuenta regresiva de 3 segundos antes de iniciar la ronda
 export function getReadyCountdown() {
+  console.log(`⚙️ [getReadyCountdown()] %cin%c [timers.js]`, "color: cyan;", "");
   return new Promise((resolve) => {
     let count = 3;
     const interval = setInterval(() => {
@@ -19,7 +17,7 @@ export function getReadyCountdown() {
 }
 
 // Tiempo de respuesta para el jugador
-export function startCountdown(duration, onTick, onComplete) {
+export function startAnswerCountdown(duration, onTick, onComplete) {
   let current = duration;
   let countdownTimerId = null;
 

@@ -1,33 +1,31 @@
+import { levelsConfig } from './levelsConfig.js';
+
 export const gameState = {
   currentLevel: 1,
-  currentPhase: 1,
-  currentRound: 1,
+  currentPhase: 0,
+  currentRound: 0,
   currentTurn: 0,
 
-  firstCounter: 15,
-  secondCounter: 10,
+  // Salud  --------- cambiar A DINAMICAMENTE---------------
+  heroHealth: null,
+  enemyHealth: null,
 
-  getReadyCounter: 3,
-  
-  heroMaxHealth: 100,
-  heroHealth: 100,
+  // Contadores
+  countdowns: { getReady: 3, answer: 3 },
 
-  enemyMaxHealth: 100,
-  enemyHealth: 100,
-  
-  musicLevel: ["level1", "level2", "level3", "level4", "level5"],
-  soundSequence: ["BA", "BE", "BI", "BO", "BU"],
-  currentSoundIndex: 0,
-  currentSoundSyllable: "",
+  // Estadísticas de respuestas
+  answers: {
+    correct: 0,
+    incorrect: 0
+  },
 
-  correctAnswer: null,
-  playerAnswer: null,
-  
-  correctAnswers: 0,
-  incorrectAnswers: 0,
-  allCorrectAnswersInRound: false,
-  
   isGameOver: false,
-  isGamePaused: false,
-  isPlayerTurnActive: false,
+  isGameActive: false,
+
+  config: levelsConfig,
+
+  characters: {
+    hero: { instance: null, element: null },
+    enemy: { instance: null, element: null }
+  }
 };

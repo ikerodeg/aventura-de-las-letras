@@ -1,7 +1,6 @@
 footer {
-  padding: 0.5em;
-  block-size: 12vh;
-  background-color: var(--footer-background);
+  block-size: 18dvh;
+  box-sizing: border-box;
   
 
   
@@ -10,41 +9,61 @@ footer {
   left: 0;
   right: 0;
   
-  padding: 1rem;
   text-align: center;
+  transition: opacity 0.5s ease;
   z-index: 10;
+
+}
+.ringsContainer {
+  block-size: 100%;
+  inline-size: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  /*opacity: 0;*/
+  pointer-events: none;
+  transition: opacity 0.5s ease;
   
-  .ringsContainer{
+  div{
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    
     img{
-      max-inline-size: 100%;
-      inline-size: 90%;
+      display: block;
+      max-inline-size: 80%;
+      margin-inline: auto;
     }
-
-    .ring{
-      cursor: pointer;
+    span{
+      font-size: 2.5rem;
+      font-weight: 800;
+      font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif ;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      filter: drop-shadow(0 0 2px yellow);
     }
   }
 }
-.ringsContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.5s ease-in-out;
-}
-.ringsContainer.visible {
+
+.visible {
   opacity: 1;
   pointer-events: auto;
+  background-color: black;
 }
-.ringsContainer.hidden {
+.hidden {
   opacity: 0;
   pointer-events: none;
+  background-color: transparent;
 }
+.visible, .hidden {
+  transition: opacity 0.4s ease;
+}
+
 .ring-clicked {
   transform: scale(0.92);
   opacity: 0.8;
@@ -54,6 +73,7 @@ footer {
   filter: brightness(1.1);
   transform: scale(1.02);
 }
+
 .ring-particles {
   position: fixed; /* Cambiado de absolute a fixed */
   transform: translate(-50%, -50%); /* Centrar perfectamente */

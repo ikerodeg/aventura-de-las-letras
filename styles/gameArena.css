@@ -26,7 +26,7 @@ html, body{
 /* ----------------------------------------- BODY --------------------------------------------- */
 body {
   background-color: var(--bg-dark);
-  background-image: url('/assets/img/woodLandscape.webp');
+  background-image: url('/assets/img/arenas/woodLandscape.webp');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

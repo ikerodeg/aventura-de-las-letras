@@ -1,7 +1,10 @@
+import { levelsConfig } from './levelsConfig.js';
+import { gameState } from './gameState.js';
+
 // Renderiza los anillos en el contenedor especificado
 export function renderRings(containerSelector, rings) {
   return new Promise((resolve, reject) => {
-    //console.log('⚙️ renderRings() en ui.js');
+    console.warn('⚙️ renderRings() en ui.js');
     try {
       const container = document.querySelector(containerSelector);
       container.classList.remove('visible');
@@ -16,13 +19,13 @@ export function renderRings(containerSelector, rings) {
         ringDiv.classList.add("ring");
         ringDiv.dataset.syllable = ring;
         const img = document.createElement("img");
-        img.src = `/assets/img/ring${ring}.webp`;
+        img.src = `/assets/img/rings/ring.webp`;
         img.alt = `Ring ${ring}`;
         ringDiv.append(img);
         container.append(ringDiv);
       });
 
-      resolve('✅ renderRings() completado');
+      resolve('🖌️ Rings renderizados!');
     } catch (error) {
       reject(error);
     }
@@ -30,12 +33,119 @@ export function renderRings(containerSelector, rings) {
   );
 }
 
+export function renderLetterRings() {
+  return new Promise((resolve, reject) => {
+    //console.log('⚙️ [letterRings()] %cin%c [ui.js]', "color:cyan;", "");
+    try{
+
+      //Guardamos el objeto del nivel actual
+      const ringsArray = levelsConfig[gameState.currentLevel].phases[gameState.currentPhase].rings;
+      console.log(`Rings renderizados: ${ringsArray}`);
+      
+     //Capturmos el footer
+     const footer = document.querySelector('footer');
+     //Capturamos el contenedor donde irán los anillos
+     const container = document.querySelector('.ringsContainer');
+
+     //Ocultamos el footer
+     //footer.classList.remove('visible');
+     //footer.classList.add('hidden');
+     
+     //Vaciamos el contenedor
+     container.innerHTML = "";
+    
+     //Añadimos los anillos
+     ringsArray.forEach(ring => {
+      //Mostramos la letra del anillo actual
+      //console.log(`Ring ${ring} renderizado!`);
+    
+      const ringDiv = document.createElement("div");
+      ringDiv.classList.add("ring");
+      ringDiv.dataset.syllable = ring;
+    
+    
+      const img = document.createElement("img");
+      img.src = `/assets/img/rings/ring.webp`;
+      img.alt = `Ring ${ring}`;
+    
+      const span = document.createElement("span");
+      span.innerText = ring;
+    
+      ringDiv.append(span);
+      ringDiv.append(img);
+      container.append(ringDiv);
+     });
+
+     resolve('✅ letterRings() completado');
+    }catch(error){
+      reject(error);
+    }
+  }
+  );
+ 
+}
+
+export function renderSyllableRings() {
+  return new Promise((resolve, reject) => {
+    //console.log('⚙️ [letterRings()] %cin%c [ui.js]', "color:cyan;", "");
+    try{
+
+      //Guardamos el objeto del nivel actual
+      const ringsArray = levelsConfig[gameState.currentLevel].phases[gameState.currentPhase].rings;
+      console.log(`Rings renderizados: ${ringsArray}`);
+      
+     //Capturmos el footer
+     const footer = document.querySelector('footer');
+     //Capturamos el contenedor donde irán los anillos
+     const container = document.querySelector('.ringsContainer');
+
+     //Ocultamos el footer
+     //footer.classList.remove('visible');
+     //footer.classList.add('hidden');
+     
+     //Vaciamos el contenedor
+     container.innerHTML = "";
+    
+     //Añadimos los anillos
+     ringsArray.forEach(ring => {
+      //Mostramos la letra del anillo actual
+      //console.log(`Ring ${ring} renderizado!`);
+    
+      const ringDiv = document.createElement("div");
+      ringDiv.classList.add("ring");
+      ringDiv.dataset.syllable = ring;
+    
+    
+      const img = document.createElement("img");
+      img.src = `/assets/img/rings/ring.webp`;
+      img.alt = `Ring ${ring}`;
+    
+      const span = document.createElement("span");
+      span.innerText = ring;
+    
+      ringDiv.append(span);
+      ringDiv.append(img);
+      container.append(ringDiv);
+     });
+
+     resolve('✅ letterRings() completado');
+    }catch(error){
+      reject(error);
+    }
+  }
+  );
+ 
+}
+
 // Muestra el contenedor de anillos
 export function showRings() {
   return new Promise((resolve, reject) => {
-    //console.log('⚙️ showRings() en ui.js');
+    console.log('⚙️ [showRings()] %cin%c [ui.js]', "color:cyan;", "");
     try {
       const container = document.querySelector('.ringsContainer');
+      const footer = document.querySelector('footer');
+      footer.classList.remove('hidden');
+      footer.classList.add('visible');
       container.classList.remove('hidden');
       container.classList.add('visible');
       resolve('✅ showRings() completado');
@@ -51,7 +161,7 @@ export function showRings() {
 export function hideRings() {
   return new Promise((resolve, reject) => {
     try {
-      const container = document.querySelector('.ringsContainer');
+      const container = document.querySelector('footer');
       container.classList.remove('visible');
       container.classList.add('hidden');
       resolve('✅ hideRings() completado');

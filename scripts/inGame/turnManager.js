@@ -1,141 +1,138 @@
-import { showRings, hideRings, updateCounter } from "./ui.js";
 import { gameState } from "./gameState.js";
-import { playSound } from "./soundManager.js";
+import { playSound, playFxSound } from "./soundManager.js";
+import { showRings, hideRings, updateCounter } from "./ui.js";
 import { ringClickAnimation, createRingParticles } from "./animations.js";
-import * as timers from "./timers.js";
-import { enemy } from "./enemy.js";
-import { hero } from "./player.js";
+import { startAnswerCountdown } from "./timers.js";
+import { performAttackAnimation, enemyDeathAnimation, heroDeathAnimation } from "./animations.js";
+import { updateHealthBar } from "./ui.js";
+import { letterPhaseHandler, syllablePhaseHandler } from "./utilsFunc.js"
 
-// Función para manejar el turno del enemigo
-async function enemyTurn() {
-  try {
-    console.log("⚙️ enemyTurn() en turnManager.js");
-    gameState.currentSoundSyllable = gameState.soundSequence[gameState.currentSoundIndex];
-    gameState.correctAnswer = gameState.currentSoundSyllable;
-    
-    const resultadoPlaySound = await playSound(gameState.currentSoundSyllable.toLowerCase());
-    console.log(resultadoPlaySound);
-    return "🏁 enemyTurn() completado";
-  } catch (error) {
-    console.error("Error en enemyTurn:", error);
-    throw error;
-  }
-}
+/**
+ * Ejecuta la lógica completa de un turno:
+ * 1) El enemigo presenta el prompt (sonido o imagen).
+ * 2) Se muestran anillos y se inicia el temporizador.
+ * 3) Se espera la respuesta del jugador.
+ * 4) Se ejecutan las animaciones de ataque y daño.
+ * 5) Se verifica y gestiona Game Over.
+ */
+export async function startTurn(turnConfig, phaseConfig) {
+  //console.log(`⚙️ [startTurn()] %cin%c [turnManager.js]`, "color:cyan;", "");
 
-// Función para evaluar la respuesta del jugador y actualizar el estado
-async function processPlayerResponse(result) {
-  if (result.type === "player") {
-    gameState.playerAnswer = result.answer;
-    if (gameState.playerAnswer === gameState.correctAnswer) {
-      console.log("✅ Correcto!");
-      await hideRings();
-      gameState.correctAnswers++;
-      gameState.currentSoundIndex++;
-      playSound("correct");
-      setTimeout(() => hero.attack(), 500);
-    } else {
-      console.log("❌ Incorrecto!");
-      gameState.incorrectAnswers++;
-      gameState.currentSoundIndex++;
-      playSound("incorrect");
-      setTimeout(() => enemy.attack(), 500);
-    }
-  } else {
-    console.log("⌛ Se agotó el tiempo");
-    gameState.incorrectAnswers++;
-    gameState.currentSoundIndex++;
-    playSound("incorrect");
-    setTimeout(() => enemy.attack(), 500);
-  }
-  await new Promise(res => setTimeout(res, 2500));
-}
+  // Añadimos a variable el tipo de fase
+  const phaseType = phaseConfig.type;
 
-// Función para verificar condiciones de GameOver
-async function checkTurn() {
-  if (gameState.enemyHealth <= 0 || gameState.heroHealth <= 0) {
-    console.log("☠️ " + (gameState.enemyHealth <= 0 ? "Enemy" : "Hero") + " defeated!");
-    gameState.isGameOver = true;
-    console.log("💀 GAME OVER!");
-    return false;
-  }
-  return true;
-}
+  // Incrementa contador de turnos global antes de comenzar
+  gameState.currentTurn++;
+  console.log(`🗣️ Turno ${gameState.currentTurn}`);
 
-// Función que inicia el turno del combate
-export async function startTurn() {
-  console.log(`currentSoundIndex: ${gameState.currentSoundIndex}`);
-
-  if (gameState.currentSoundIndex >= gameState.soundSequence.length) {
-    console.log(`---------- Fin Ronda ${gameState.currentRound} -----------`);
-    gameState.currentSoundIndex = 0;
-    if (++gameState.currentRound === 4) {
-      console.log("Fin de las rondas");
-      gameState.currentRound = 1;
-      return;
+  // 1) Enemigo dicta el prompt
+  const phaseTypeActions = {
+    letter: async () => {
+      //console.log(`☎️ [letterPhaseHandler()] %cfrom%c [turnManager.js]`, "color:tomato;", "");
+      return await letterPhaseHandler(turnConfig);
+    },
+    syllable: async () => {
+      console.log('Fase de sílaba');
+      // Asegúrate de que esto también devuelva una promesa cuando implementes esta fase
+      return await syllablePhaseHandler(turnConfig);
+    },
+    semantic: async () => {
+      console.log('Fase semántica');
+      // Asegúrate de que esto también devuelva una promesa cuando implementes esta fase
+      return Promise.resolve();
     }
   }
 
-  try {
-    // Fase 1: Turno del enemigo
-    const resultadoEnemyTurn = await enemyTurn();
-    console.log(resultadoEnemyTurn);
+  // 2) Mostrar anillos
+  //console.log(`☎️ [showRings()] %cfrom%c [turnManager.js]`, "color:tomato;", "");
+  await showRings();
 
-    // Fase 2: Mostrar anillos
-    await showRings(".ringsContainer");
-    
-    // Fase 3: Temporizador integrado con detección de clics
-    const result = await new Promise((resolve) => {
-      let answered = false;
-      const container = document.querySelector(".ringsContainer");
-      let stopTimer = null; // <--- Variable para controlar el timer
+  // 3) Ejecutar la accion de la fase
+  await phaseTypeActions[phaseType]();
 
-      const cleanup = () => {
-        container.removeEventListener("click", clickHandler);
-        if (stopTimer) stopTimer(); // <--- Detener timer solo si existe
-      };
+  //Variables locales
+  let answered = false;
+  let stopTimer;
 
-      const clickHandler = (event) => {
-        const ring = event.target.closest(".ring");
-        if (ring && !answered) {
+  //Manejo de la respuesta del jugador
+  const result = await new Promise(resolve => {
+    const clickHandler = event => {
+      console.log(`⚙️ [clickHandler()] %cin%c [turnManager.js]`, "color:cyan;", "");
+      if (answered) return;
+      const ring = event.target.closest('.ring');
+      if (!ring) return;
+      answered = true;
+      const answer = ring.dataset.syllable;
+      playFxSound('fx.ringFx');
+      ringClickAnimation(ring);
+      const rect = ring.getBoundingClientRect();
+      createRingParticles(rect.left + rect.width / 2, rect.top + rect.height / 2);
+      cleanup();
+      resolve({ type: 'player', answer });
+    };
+
+    const cleanup = () => {
+      document.querySelector('.ringsContainer').removeEventListener('click', clickHandler);
+      if (stopTimer) stopTimer();
+    };
+
+    //console.log('Añadiendo event listener a .ringsContainer');
+    document.querySelector('.ringsContainer').addEventListener('click', clickHandler);
+
+    stopTimer = startAnswerCountdown(
+      gameState.countdowns.answer,
+      remaining => updateCounter('.mainCounter', remaining),
+      () => {
+        if (!answered) {
           answered = true;
-          playSound("ringFx");
-          ringClickAnimation(ring);
-          const rect = ring.getBoundingClientRect();
-          createRingParticles(
-            rect.left + rect.width/2,
-            rect.top + rect.height/2
-          );
-          resolve({ type: "player", answer: ring.dataset.syllable });
-          cleanup(); // <--- Limpiar DESPUÉS de resolver
+          cleanup();
+          resolve({ type: 'timeout' });
         }
-      };
+      }
+    );
+  });
 
-      stopTimer = timers.startCountdown( // <--- Asignar el timer aquí
-        10,
-        remaining => updateCounter(".mainCounter", remaining),
-        () => {
-          if (!answered) {
-            answered = true;
-            resolve({ type: "timeout" });
-            cleanup(); // <--- Limpiar DESPUÉS de resolver
-          }
-        }
-      );
+  // 3) Ocultar anillos
+  await hideRings();
 
-      container.addEventListener("click", clickHandler);
-    });
-    
+  console.log(`Respuesta del jugador: ${result.answer}`);
+  console.log(`Respuesta esperada: ${turnConfig.expected}`);
+  console.log(`Respuesta correcta: ${result.answer === turnConfig.expected}`);
+  console.log(turnConfig);
+  
+  
+  
 
-    console.log("Resultado de la respuesta: ", result);
-    
-    // Fase 4: Procesar respuesta
-    await processPlayerResponse(result);
+  // 4) Animaciones de ataque y aplicar daño
+  const isCorrect = result.type === 'player' && result.answer === turnConfig.expected;
+  console.warn(`Respuesta correcta: ${isCorrect}`);
 
-    // Fase 5: Verificar continuación
-    if (await checkTurn() && !gameState.isGameOver) {
-      setTimeout(() => startTurn(), 1500);
-    }
-  } catch (error) {
-    console.error("Error en startTurn:", error);
+  if (isCorrect) {
+    //Sumamos respuesta correcta
+    gameState.answers.correct++;
+    //Reproducimos sonido correcto
+    playFxSound('answers.correct');
+    //Animacion de ataque del héroe
+    await performAttackAnimation('hero', gameState.characters);
+  } else {
+    //Sumamos respuesta incorrecta
+    gameState.answers.incorrect++;
+    //Reproducimos sonido incorrecto
+    playFxSound('answers.incorrect');
+    //Animacion de ataque del enemigo
+    await performAttackAnimation('enemy', gameState.characters);
   }
+
+  // 5) Verificar Game Over
+  if (gameState.characters.enemy.instance.health <= 0) {
+    await enemyDeathAnimation();
+    gameState.isGameOver = true;
+    gameState.winner = 'hero';
+  } else if (gameState.characters.hero.instance.health <= 0) {
+    await heroDeathAnimation();
+    gameState.isGameOver = true;
+    gameState.winner = 'enemy';
+  }
+
+  return isCorrect; // Devolver si el turno fue correcto
 }

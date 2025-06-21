@@ -1,27 +1,72 @@
 .heroArena {
   position: absolute;
   left: 5%;
-  bottom: 22%;
-  /*animation: glowHero alternate 1s infinite;*/
-  will-change: filter;
-  transform: translateZ(0);
+  bottom: 25%;
 }
 
 .hero-attack-move {
-  transition: 
-    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-    filter 0.3s ease;
+  animation: hero-forward 0.7s forwards;
   z-index: 2;
 }
 
+/* Segun suba de nivel el heroe se movera mas rapido */
 .hero-attack-return {
-  transition: transform 0.35s ease-out;
+  animation: hero-comeback 0.7s forwards;
 }
 
 .hero-impact-frame {
   filter: brightness(1.2) contrast(1.1);
+  filter: drop-shadow(0 0 5px #fcff46) drop-shadow(0 0 10px #fffb00);
+  transition: filter 0.3s ease;
 }
 
 .hero-take-damage {
-  animation: damage-flash-hero 0.3s ease 2;
+  animation: damage-flash-hero 0.3s ease;
+}
+
+.hero-idle {
+  animation: glowHero 1s infinite ease-in-out;
+}
+
+@keyframes hero-forward {
+  from { transform: translate(0, 0); }
+  to   { transform: translateX(var(--deltaX)); }
+}
+
+@keyframes hero-comeback {
+  from   { transform: translateX(var(--deltaX)); }
+  to     { transform: translate(0, 0); }
+}
+
+@keyframes glowHero {
+  0% {}
+  50% {
+    filter: drop-shadow(0 0 4px white);
+    transform: translateX(-1px);
+  }
+  100% {
+    transform: scale(1.01);
+    filter: drop-shadow(0 0 1px white);
+  }
+}
+@keyframes damage-flash-hero {
+  0% { 
+    filter: brightness(100%);
+    transform: translate(0, 0) rotate(0deg);
+  }
+  30% {
+    transform: translate(-8px, 4px) rotate(-4deg); /* Aumentar desplazamiento */
+    filter: brightness(200%); /* Aumentar brillo */
+  }
+  50% {
+    transform: translate(6px, -2px) rotate(2deg);
+    filter: brightness(250%); /* Más brillo para mayor visibilidad */
+  }
+  75% {
+    transform: translate(4px, 0) rotate(0deg); 
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+    filter: brightness(100%); 
+  }
 }

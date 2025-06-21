@@ -1,28 +1,68 @@
 .enemyArena {
   position: absolute;
   right: 5%;
-  bottom: 22%;
-  /* animation: glowEnemy alternate 1s infinite; */
-  will-change: filter;
-  transform: translateZ(0);
+  bottom: 28%;
 }
 
 .enemy-attack-move {
-  transition: 
-    transform 1.5s cubic-bezier(0.4, 0, 0.2, 1),
-    filter 0.3s ease-in;
+  animation: enemy-forward 0.7s forwards;
   z-index: 2;
 }
 
 .enemy-attack-return {
-  transition: transform 1s ease-out;
+  animation: enemy-comeback 0.7s forwards;
 }
 
 .enemy-impact-frame {
   filter: brightness(1.2) contrast(1.1);
+  filter: drop-shadow(0 0 5px #ff5353) drop-shadow(0 0 10px #ff0000);
+  transition: filter 0.3s ease;
 }
 
 .enemy-take-damage {
-  animation: damage-flash-enemy 0.3s ease 2;
+  animation: damage-flash-enemy 0.3s ease;
 }
 
+.enemy-idle {
+  animation: glowEnemy 1s infinite ease-in-out;
+}
+
+@keyframes enemy-forward {
+  from { transform: translate(0, 0); }
+  to   { transform: translateX(var(--deltaX)); }
+}
+
+@keyframes enemy-comeback {
+  from   { transform: translateX(var(--deltaX)); }
+  to     { transform: translate(0, 0); }
+}
+@keyframes glowEnemy {
+  0% {}
+  50% {
+    transform: translateY(-5px);
+    filter: drop-shadow(0 0 4px red);
+  }
+  100% {
+    filter: drop-shadow(0 0 1px red);
+  }
+}
+@keyframes damage-flash-enemy {
+  0% { 
+    filter: brightness(100%);
+    transform: translate(0, 0) rotate(0deg);
+  }
+  30% {
+    transform: translate(4px, -2px) rotate(2deg); 
+    }
+  50% {
+    transform: translate(-3px, 1px) rotate(-1deg);
+    filter: brightness(150%); 
+    }
+  75% {
+    transform: translate(-2px, 0) rotate(0deg); 
+    }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+    filter: brightness(100%); 
+    }
+}
